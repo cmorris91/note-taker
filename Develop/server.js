@@ -29,15 +29,18 @@ app.post('/api/notes', (req, res) => {
     })
 });
 
-// app.delete('/api/notes/:id', (req, res) => {
-    
-//     console.log(req.params.id)
-//     // notesData.delete(removedNote);
-//     // // console.log(notesData);
-//     // fs.writeFileSync('./db/db.json', JSON.stringify(notesData), (err) => {
-//     //     if (err) return console.log(err);
-//     // res.json(notesData);
-// })
-// })
+app.delete('/api/notes/:id', (req, res) => {
+    const removed = req.params.id;
+    for (var i=0; i< notesData.length; i++) {
+        if(notesData[i].id === removed) {
+            notesData.splice(i, 1)
+        }
+    }
+
+    fs.writeFile('./db/db.json', JSON.stringify(notesData), (err) => {
+        if (err) return console.log(err);
+    res.json(true);
+    })
+})
 
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
